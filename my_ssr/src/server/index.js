@@ -1,5 +1,6 @@
 import express from 'express';
 import {render} from './utils';
+import mbo from './mbo'; 
 import { matchRoutes } from 'react-router-config';
 import { getStore } from '../store';
 import routes  from '../Routes';
@@ -8,11 +9,14 @@ import proxy from 'express-http-proxy';
 const app = express();
 app.use(express.static('public'));
 
-app.use('/api', proxy('http://localhost:4000', {
+app.use('/api/mbo', mbo);
+
+app.use('/api', proxy('http://localhost:4001', {
   proxyReqPathResolver: function(req) {
-    return '/api'+req.url
+    return '/api'+ req.url
   }
 }));
+
 
 app.get('*', function (req, res) {
   const store = getStore();
@@ -42,7 +46,7 @@ app.get('*', function (req, res) {
   })
 })
  
-var server = app.listen(3001, function () {
+var server = app.listen(3002, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log("应用实例，访问地址为 http://%s:%s", host, port);

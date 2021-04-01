@@ -9,7 +9,10 @@ module.exports = {
           targets: {
             browsers: ['last 2 versions']
           }
-        }]]
+        }]],
+        plugins:[
+          ["import", { "libraryName": "antd", "style": "css" }]
+        ]
       }
     }]
   }

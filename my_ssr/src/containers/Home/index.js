@@ -10,6 +10,8 @@ class Home extends Component {
     const { list } = this.props
     return list.map(item => <div key={item.id}>{item.title}</div>)
   }
+
+
   render() { 
     return (
       <Fragment>
@@ -23,9 +25,10 @@ class Home extends Component {
           }
         </div>
       </Fragment>
-     
     )
   }
+
+  
   componentDidMount() {
     if (!this.props.list.length) {
       this.props.getHomeList()

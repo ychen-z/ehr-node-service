@@ -7,19 +7,27 @@ const clientConfig = {
   entry: './src/client/index.js',
   module: {
     rules: [{
-      test: /\.css?$/,
-      use: ['style-loader', {
-        loader: 'css-loader',
-        options: {
-          modules: true
-        }
-      }]
+      test: /\.(css|less)$/,
+      use: [
+        require.resolve('style-loader'),
+        require.resolve('css-loader'),
+        {
+          loader: require.resolve('less-loader'),
+          options: {
+            sourceMap: false,
+            lessOptions: {
+              javascriptEnabled: true
+            }
+          }
+        },
+      ],
+      sideEffects: true
     }]
   },
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'public')
-  },
+  }
 }
 
 module.exports = merge(config, clientConfig)
