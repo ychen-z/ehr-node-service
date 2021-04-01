@@ -14,3 +14,14 @@ export const getHomeList = (server) => {
       });
   };
 };
+
+
+export const onclick = (id) => {
+  return (dispatch, getState, axiosInstance) => {
+    return axiosInstance.get('/api/mbo/news', {id}).then(function (result) {
+      dispatch({
+          type: "ORDER_LOG",
+          payload: result.data
+      });
+  })}
+}

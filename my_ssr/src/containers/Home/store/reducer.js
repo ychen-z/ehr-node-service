@@ -6,13 +6,18 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
+  console.log(action);
   switch(action.type) {
     case CHANGE_LIST:
-      const newState = {
+      return {
         ...state,
         newsList: action.list
       };
-      return newState;
+    case "ORDER_LOG":
+      return {
+        ...state,
+        newsList: action.payload.data
+      };
     default:
       return state;
   }

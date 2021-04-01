@@ -1,18 +1,33 @@
-import React, { Component } from 'react';
-
-class Notound extends Component {
-  componentWillMount() {
-    const { staticContext } = this.props;
-    staticContext && (staticContext.NotFound = true)
+import React from 'react';
+import { connect } from 'react-redux';
+import { onclick } from '../Home/store/actions';
+const Notound = props => {
+  const { staticContext, list } = props;
+  staticContext && (staticContext.NotFound = true)
+  console.log(list);
+ const onclick=()=>{
+    props.onclick(1);
   }
 
-  render() { 
-    return (
+  return (
+    <div>
       <div>
-        <div>404</div>
+        {list.list1}
+        <button onClick={onclick}>接口调用</button>
       </div>
-    );
-  }
+    </div>
+  );
 }
  
-export default Notound;
+
+const mapStateToProps = state => ({
+  list: state.home.newsList,
+});
+const mapDispatchToProps = dispatch => ({
+  onclick(id){
+    dispatch(onclick(id))
+  }
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notound);

@@ -26,29 +26,28 @@ app.get("/info", (req, res) => {
 });
 
 app.get("/news", (req, res) => {
-  getLogList(); // 获取日志列表
+  getNewsList(); 
   ServerCookie = req.headers.cookie; // 获取到cookie的字段
-
-  console.log(`ServerCookie`, ServerCookie);
-  async function selectAllData() {
+  async function getApi1() {
     return await request("http://localhost:4001/api/news.json");
   }
 
-  async function selectCounts() {
+  async function getApi2() {
     return await superagent.get(
         "http://localhost.netease.com:8080/mock/test/api/mbo/loginInfo?systems=12"
       )
       .set("Content-Type", "application/json;charset=UTF-8")
       .set("Cookie", ServerCookie)
   }
-  async function getLogList() {
-    let result = await selectAllData(); // 获取列表
-    let { body } = await selectCounts(); // 查询总数
+  
+  async function getNewsList() {
+    let list1 = await getApi1(); // getApi1
+    let { body: list2 } = await getApi2(); // getApi2
     res.json({
       code: 200,
       data: {
-        list: result,
-        total: body,
+        list1: list1,
+        list2: list2,
       },
     });
   }
